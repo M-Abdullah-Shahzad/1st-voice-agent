@@ -1,72 +1,86 @@
-# 1st Voice Agent
+# Voice Agent with Groq and Edge TTS
 
-A small voice-based voice agent built on Groq Cloud and Microsoft Edge TTS. The repository includes:
+A Python voice-assistant project with two interaction modes: a local microphone-based application and a Streamlit web interface. Groq provides language-model responses; the web interface also uses Groq Whisper for speech transcription and Microsoft Edge TTS for spoken responses.
 
-- `main.py` — local microphone voice assistant with `speech_recognition`, `pygame`, and `edge-tts`
-- `app.py` — a Streamlit web UI version with audio upload, transcription, and browser playback
-- `agent.py` — Groq client wrapper for chat completions
-- `voice_agent.py` / `test_tts.py` — helper scripts for offline TTS and voice testing
+## Applications
+
+| File | Purpose |
+|---|---|
+| main.py | Local microphone and speaker-based voice assistant |
+| app.py | Streamlit interface with audio recording, transcription, chat, and browser playback |
+| agent.py | Groq chat-completion helper |
+| voice_agent.py / test_tts.py | Supporting voice and TTS utilities |
 
 ## Features
-- Local microphone speech input via `SpeechRecognition`
-- Voice response generation through Groq Cloud (`llama-3.3-70b-versatile`)
-- Natural-sounding text-to-speech using `edge-tts`
-- Optional Streamlit web interface for browser voice interactions
+
+- Microphone input for the local assistant.
+- Text chat and recorded-audio input in the Streamlit interface.
+- Speech-to-text through Groq Whisper (whisper-large-v3) in the web app.
+- LLM responses through Groq-hosted Llama models.
+- Speech output through Microsoft Edge TTS.
+- Conversation history during the active Streamlit session.
 
 ## Requirements
-- Python 3.10+
-- Windows recommended for microphone and audio playback support
 
-## Installation
-1. Clone the repo:
+- Python 3.10+
+- Groq API key
+- Microphone and speaker for local voice mode
+- Windows is recommended for the local audio workflow; browser mode depends on Streamlit audio support.
+
+## Setup
+
+1. Clone the repository:
 
 ```bash
-git clone https://github.com/Abdullah17521/1st-voice-agent.git
+git clone https://github.com/M-Abdullah-Shahzad/1st-voice-agent.git
 cd 1st-voice-agent
 ```
 
 2. Create and activate a virtual environment:
 
-```bash
-python -m venv venv
-venv\Scripts\activate
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
 3. Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
-4. Create a `.env` file from the example and add your Groq API key:
-
-```bash
-copy .env.example .env
-```
-
-Then set:
+4. Copy .env.example to .env and set GROQ_API_KEY:
 
 ```env
 GROQ_API_KEY=your_groq_api_key_here
 ```
 
-## Usage
+## Run
 
-### Run the local voice assistant
+Local microphone assistant:
 
 ```bash
 python main.py
 ```
 
-### Run the Streamlit web interface
+Streamlit web interface:
 
 ```bash
 streamlit run app.py
 ```
 
-## Notes
-- Keep `.env` private; `GROQ_API_KEY` should never be committed.
-- `requirements.txt` includes the packages needed for both local and Streamlit use.
+## Current limitations
+
+- The web interface currently requests English transcription.
+- Conversation history is stored in Streamlit session state and is not a persistent chat database.
+- The web interface uses a fixed English neural TTS voice.
+- Microphone permissions, audio drivers, and browser playback support vary by operating system.
+- External Groq and Edge TTS services require network access.
+
+## Security
+
+Keep .env private. Never commit API keys, access tokens, or personal audio recordings. Review external speech and LLM provider data-handling terms before sending sensitive audio.
 
 ## License
-Project code — see repository for license details.
+
+No license is currently declared. Contact the repository owner before redistributing this project.
